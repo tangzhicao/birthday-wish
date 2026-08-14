@@ -1,6 +1,6 @@
 // 全局变量
 let currentSection = 0;
-const sections = ['welcome', 'blessings', 'cake', 'wishes', 'balloonGame', 'quiz'];
+const sections = ['welcome', 'blessings', 'cake', 'wishes', 'balloonGame', 'quiz', 'goodnight'];
 let blownCandles = 0;
 let quizScore = 0;
 let currentQuestion = 0;
@@ -615,7 +615,60 @@ function showQuizResult() {
     } else {
         resultMessage.textContent = "要多了解唐润虹哦！❤️";
     }
+    
+    // 添加晚安按钮（如果还没有）
+    if (!document.getElementById('toGoodnightBtn')) {
+        const goodnightBtn = document.createElement('button');
+        goodnightBtn.id = 'toGoodnightBtn';
+        goodnightBtn.className = 'magic-btn';
+        goodnightBtn.style.marginTop = '1rem';
+        goodnightBtn.style.background = 'linear-gradient(135deg, #a18cd1 0%, #4facfe 100%)';
+        goodnightBtn.textContent = '查看晚安祝福 🌙';
+        goodnightBtn.addEventListener('click', function() {
+            const goodnightSection = document.getElementById('goodnight');
+            goodnightSection.classList.add('visible');
+            goodnightSection.scrollIntoView({ behavior: 'smooth' });
+            createGoodnightStars();
+        });
+        quizResult.appendChild(goodnightBtn);
+    }
 }
+
+// 晚安区星星效果
+function createGoodnightStars() {
+    const container = document.getElementById('goodnightStars');
+    if (!container || container.children.length > 0) return;
+    
+    const colors = ['#ffdd57', '#a18cd1', '#4facfe', '#ff9a9e', '#00f2fe'];
+    
+    for (let i = 0; i < 40; i++) {
+        const star = document.createElement('div');
+        const size = Math.random() * 5 + 2;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        star.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            background: ${color};
+            border-radius: 50%;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            box-shadow: 0 0 ${size * 2}px ${color};
+            animation: goodnightStarTwinkle ${1 + Math.random() * 2}s ease-in-out ${Math.random() * 2}s infinite alternate;
+        `;
+        container.appendChild(star);
+    }
+}
+
+// 添加星星闪烁动画
+const goodnightStarStyle = document.createElement('style');
+goodnightStarStyle.textContent = `
+    @keyframes goodnightStarTwinkle {
+        from { opacity: 0.2; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1.3); }
+    }
+`;
+document.head.appendChild(goodnightStarStyle);
 
 // 隐藏彩蛋
 function initEasterEgg() {
