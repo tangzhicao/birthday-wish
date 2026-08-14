@@ -12,7 +12,7 @@ const quizQuestions = [
     {
         question: "唐润虹的星座是什么？",
         options: ["狮子座", "处女座", "天秤座", "天蝎座"],
-        correct: 0,
+        correct: 1,
         type: "默契考验"
     },
     {
